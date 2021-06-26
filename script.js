@@ -11,9 +11,7 @@ pizzaJson.map((item, index)=>{
 
     pizzaItem.setAttribute('data-key', index)
     pizzaItem.querySelector('.pizza-item--img img').src = item.img;
-    pizzaItem.querySelector('.pizza-item--price .P').innerHTML = `P - R$ ${item.prices[0].toFixed(2)}`;
-    pizzaItem.querySelector('.pizza-item--price .M').innerHTML = `M - R$ ${item.prices[1].toFixed(2)}`;
-    pizzaItem.querySelector('.pizza-item--price .G').innerHTML = `G - R$ ${item.prices[2].toFixed(2)}`;
+    pizzaItem.querySelector('.pizza-item--price').innerHTML = `R$ ${item.price.toFixed(2)}`;
     pizzaItem.querySelector('.pizza-item--name').innerHTML = item.name;
     pizzaItem.querySelector('.pizza-item--desc').innerHTML = item.description;
 
@@ -27,13 +25,13 @@ pizzaJson.map((item, index)=>{
         c('.pizzaBig img').src = pizzaJson[key].img;
         c('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
         c('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
+        c('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`;
         c('.pizzaInfo--size.selected').classList.remove('selected');
         cs('.pizzaInfo--size').forEach((size, sizeIndex)=>{
             if(sizeIndex == 2){
                 size.classList.add('selected');
             }
             size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex];
-            c('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].prices[sizeIndex].toFixed(2)}`;
         })
 
         c('.pizzaInfo--qt').innerHTML = modalQt;
@@ -109,6 +107,7 @@ c('.menu-closer').addEventListener('click', () => {
     c('aside').style.left = '100vw';
 })
 
+//Eventos do carrinho
 function updateCart(){
 
     if(cart.length > 0){
@@ -122,7 +121,7 @@ function updateCart(){
 
         for(let i in cart){
             let pizzaItem = pizzaJson.find((item)=>item.id == cart[i].id);
-            subtotal += pizzaItem.prices * cart[i].qt;
+            subtotal += pizzaItem.price * cart[i].qt;
             contador = cart.length * cart[i].qt;
             
             let cartItem = c('.models .cart--item').cloneNode(true);
